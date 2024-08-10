@@ -4,10 +4,23 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    "process.env": {
+      NODE_ENV: "production"
+    }
+  },
   plugins: [react()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    lib: {
+      entry: "./src/index.tsx",
+      name: "feedbackly-widget",
+      fileName: (format) => `feedbackly-widget.${format}.js`
+    },
+    target: "esnext"
+  }
 })
