@@ -3,6 +3,7 @@ import { CreateFeedbackDto } from './dto/create-feedback.dto';
 import { UpdateFeedbackDto } from './dto/update-feedback.dto';
 import { PrismaService } from 'src/prisma.service';
 import { WebsiteService } from 'src/website/website.service';
+import { Feedback } from '@prisma/client';
 
 @Injectable()
 export class FeedbackService {
@@ -29,12 +30,46 @@ export class FeedbackService {
     }
   }
 
-  findAll() {
-    return `This action returns all feedback`;
+  async findAll(websiteId: string, userData: any) {
+    try {
+      // Make sure website exists and is owned by the user
+      const website = await this.websiteService.findOne(websiteId, userData)
+
+      return await this.prismaService.feedback.findMany({ where: { websiteId: website.websiteId } })
+    } catch (error) {
+      throw new HttpException(error.message || 'Something went wrong.',  error.status || HttpStatus.INTERNAL_SERVER_ERROR)
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} feedback`;
+  async findOne(websiteId: string, feedbackId: string, userData: any): Promise<Feedback> {
+    // Make sure website exists and is owned by the user
+    const website = await this.websiteService.findOne(websiteId, userData)
+
+    return await this.prismaService.feedback.findFirstOrThrow({ 
+      where: { websiteId: website.websiteId, feedbackId }, 
+      select: {
+        feedbackId: true,
+        name: true,
+        email: true,
+        message: true,
+        websiteId: true,
+        website: {
+          select: {
+            websiteId: true,
+            name: true,
+            url: true,
+            description: true
+          }
+        }
+      }
+    })
+      .catch(err => {
+        if(err?.message === 'No Feedback found'){
+          throw new HttpException('Feedback does not exist', HttpStatus.NOT_FOUND)
+        } else {
+          throw new HttpException('Something went wrong', HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+      })
   }
 
   update(id: number, updateFeedbackDto: UpdateFeedbackDto) {

@@ -47,8 +47,8 @@ export class WebsiteService {
     }
   }
 
-  findAll(userData: any): Promise<WebsiteInterface[]> {
-    return this.prismaService.website.findMany({ 
+  async findAll(userData: any): Promise<WebsiteInterface[]> {
+    return await this.prismaService.website.findMany({ 
       where: { ownerId: userData.userId },
       select: {
         websiteId: true,
@@ -68,8 +68,8 @@ export class WebsiteService {
     })
   }
 
-  findOne(websiteId: string, userData: any) {
-    return this.prismaService.website.findFirstOrThrow({ 
+  async findOne(websiteId: string, userData: any) {
+    return await this.prismaService.website.findFirstOrThrow({ 
       where: { websiteId, ownerId: userData.userId },
       select: {
         websiteId: true,
