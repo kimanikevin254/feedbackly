@@ -7,6 +7,7 @@ import { UsersModule } from 'src/users/users.module';
 @Module({
   controllers: [WebsiteController],
   providers: [WebsiteService, PrismaService],
-  imports: [UsersModule]
+  imports: [UsersModule],
+  exports: [WebsiteService]
 })
 export class WebsiteModule {}

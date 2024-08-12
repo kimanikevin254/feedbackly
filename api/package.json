@@ -1,8 +1,8 @@
 {
   "name": "api",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Feedbackly is a powerful SaaS platform that enables website owners to effortlessly collect feedback from their users.",
+  "author": "Kevin Kimani",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {

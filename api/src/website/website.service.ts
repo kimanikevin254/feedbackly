@@ -119,4 +119,11 @@ export class WebsiteService {
       where: { websiteId: websiteExists.websiteId }
     })
   }
+
+  // For the feedback module
+  // Checks if the website exists
+  // Cannot use the findOne method for the feedback module since it requires user data
+  async retrieveBySitekey(sitekey: string): Promise<Website | undefined>{
+    return await this.prismaService.website.findFirst({ where: { sitekey } })
+  } 
 }
