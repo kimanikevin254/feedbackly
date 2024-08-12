@@ -8,8 +8,9 @@ import { Popover, PopoverTrigger } from "./ui/popover";
 import { PopoverContent } from "@radix-ui/react-popover";
 import MessageIcon from "./MessageIcon";
 import tailwindStyles from "../index.css?inline"
+import axios from "axios";
 
-export default function Widget() {
+export default function Widget(props: any) {
     const [rating, setRating] = useState(0)
     const [submitted, setSubmitted] = useState(false)
 
@@ -17,7 +18,7 @@ export default function Widget() {
         setRating(index + 1)
     }
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         try {
             // Prevent page reload
             e.preventDefault()
@@ -25,13 +26,16 @@ export default function Widget() {
             const formData = new FormData(e.currentTarget)
 
             const data = {
+                projectId: props.projectId,
                 name: formData.get('name') as string,
                 email: formData.get('email') as string,
                 rating: rating,
-                feedback: formData.get('feedback') as string,
+                message: formData.get('message') as string,
             }
 
-            console.log(data);
+            const res = await axios.post(`http://localhost:3000/api/website/${props.projectId}/feedback`, { ...data })
+
+            console.log(res);
 
             setSubmitted(true)
         } catch (error) {
@@ -86,11 +90,11 @@ export default function Widget() {
 
                                     <div>
                                         <Label htmlFor="feedback">Message</Label>
-                                        <Textarea id="feedback" name="feedback" required placeholder="Your message" className="min-h-40" />
+                                        <Textarea id="message" name="message" required placeholder="Your message" className="min-h-40" />
                                     </div>
 
                                     <div className="flex items-center justify-center">
-                                        <Button className="px-8">Submit</Button>
+                                        <Button className="px-8" type="submit">Submit</Button>
                                     </div>
                                 </form>
                             </div>
