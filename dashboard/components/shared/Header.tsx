@@ -1,9 +1,8 @@
 import { ReactNode } from 'react'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu'
-import { FolderRoot, Menu, User } from 'lucide-react'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu'
+import { FolderRoot, LogOut, Menu } from 'lucide-react'
 import Link from 'next/link'
 import { useUserStore } from '@/store/user'
-import { Button } from '../ui/button'
 
 export default function Header(): ReactNode {
     const logout = useUserStore((state) => state.logout)
@@ -22,7 +21,7 @@ export default function Header(): ReactNode {
             </DropdownMenuTrigger>
             <DropdownMenuContent className=''>
                 <DropdownMenuItem asChild>
-                    <Link href={'/'} className='flex items-center gap-2'>
+                    <Link href={'/dashboard'} className='flex items-center gap-2'>
                         <FolderRoot className='w-4 h-4' />
                         <span>Projects</span>
                     </Link>
@@ -30,7 +29,7 @@ export default function Header(): ReactNode {
 
                 <DropdownMenuItem>
                     <button onClick={() => handleLogout()} className='flex items-center gap-2'>
-                        <User className='w-4 h-4' />
+                        <LogOut className='w-4 h-4' />
                         <span>Log out</span>
                     </button>
                 </DropdownMenuItem>

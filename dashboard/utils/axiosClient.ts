@@ -1,13 +1,20 @@
+import { useUserStore } from '@/store/user';
 import axios from 'axios';
 
 // Function to get token from local storage
 export function getAuthToken(): string | null {
-    return localStorage.getItem('access_token');
+    const token = localStorage.getItem('user-storage');
+
+    if(token){
+        const parsedToken = JSON.parse(token)
+        return parsedToken.state.accessToken
+    } else return null
 }
 
 // Function to handle token removal and redirection
 export function clearAuthToken(): void {
-    localStorage.removeItem('access_token');
+    useUserStore.setState({ accessToken: null })
+    // localStorage.removeItem('access_token');
     // window.location.href = '/signin'; // Redirect to sign-in page
 }
 
