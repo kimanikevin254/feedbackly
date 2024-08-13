@@ -13,7 +13,7 @@ export default function Header(): ReactNode {
 
   return (
     <header className='p-4 flex justify-between items-center shadow mb-4'>
-        <h1 className='font-bold text-2xl'>Feedbackly</h1>
+        <Link href={'/dashboard'} className='font-bold text-2xl'>Feedbackly</Link>
 
         <DropdownMenu>
             <DropdownMenuTrigger className='focus:outline-none'>

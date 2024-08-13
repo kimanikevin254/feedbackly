@@ -63,19 +63,24 @@ export default function ProjectsList(): ReactNode {
                 <SkeletonCard key={i} />
             )) :
             (
-                projects && projects.map(({ websiteId, name, description }) => (
-                    <Card key={websiteId} className='w-96'>
-                        <CardHeader>
-                            <CardTitle>{name.length > 57 ? name.slice(0, 57) + '...' : name}</CardTitle>
-                            <CardDescription>{description ? (description.length > 137 ? description.slice(0, 137) + '...' : description) : <p className='italic'>No description</p>}</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <Link href={`/dashboard/projects/${websiteId}`}>
-                                <Button>View Project</Button>
-                            </Link>
-                        </CardContent>
-                    </Card>
-                ))
+                projects && 
+                (
+                    projects.length === 0 ? 
+                    <p className='text-center my-6 font-semibold italic flex-1'>You haven't created any projects. Create one to get started.</p> : 
+                    projects.map(({ websiteId, name, description }) => (
+                        <Card key={websiteId} className='w-96'>
+                            <CardHeader>
+                                <CardTitle>{name.length > 57 ? name.slice(0, 57) + '...' : name}</CardTitle>
+                                <CardDescription>{description ? (description.length > 137 ? description.slice(0, 137) + '...' : description) : <p className='italic'>No description</p>}</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <Link href={`/dashboard/projects/${websiteId}`}>
+                                    <Button>View Project</Button>
+                                </Link>
+                            </CardContent>
+                        </Card>
+                    ))
+                )
             )
         }
     </div>
