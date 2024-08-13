@@ -1,4 +1,4 @@
-import { IsEmail, IsString } from "class-validator";
+import { IsEmail, IsNumber, IsString } from "class-validator";
 
 export class CreateFeedbackDto {
     @IsString()
@@ -12,4 +12,7 @@ export class CreateFeedbackDto {
 
     @IsString()
     message: string;
+
+    @IsNumber()
+    rating: number;
 }

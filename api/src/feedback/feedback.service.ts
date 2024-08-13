@@ -21,6 +21,7 @@ export class FeedbackService {
           websiteId: website.websiteId,
           name: createFeedbackDto.name,
           email: createFeedbackDto.email,
+          rating: createFeedbackDto.rating,
           message: createFeedbackDto. message
         }
       })
@@ -35,13 +36,30 @@ export class FeedbackService {
       // Make sure website exists and is owned by the user
       const website = await this.websiteService.findOne(websiteId, userData)
 
-      return await this.prismaService.feedback.findMany({ where: { websiteId: website.websiteId } })
+      return await this.prismaService.feedback.findMany({ 
+        where: { websiteId: website.websiteId },
+        select: {
+          feedbackId: true,
+          name: true,
+          email: true,
+          rating: true,
+          message: true,
+          createdAt: true,
+          
+          website: {
+            select: {
+              name: true,
+              url: true
+            }
+          }
+        } 
+      })
     } catch (error) {
       throw new HttpException(error.message || 'Something went wrong.',  error.status || HttpStatus.INTERNAL_SERVER_ERROR)
     }
   }
 
-  async findOne(websiteId: string, feedbackId: string, userData: any): Promise<Feedback> {
+  async findOne(websiteId: string, feedbackId: string, userData: any) {
     // Make sure website exists and is owned by the user
     const website = await this.websiteService.findOne(websiteId, userData)
 
@@ -60,7 +78,9 @@ export class FeedbackService {
             url: true,
             description: true
           }
-        }
+        },
+        createdAt: true,
+        
       }
     })
       .catch(err => {

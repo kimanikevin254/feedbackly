@@ -44,5 +44,9 @@ model Feedback {
   websiteId  String
   name       String
   email      String
+  rating     Int
   message    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
