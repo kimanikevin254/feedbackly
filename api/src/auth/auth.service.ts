@@ -28,7 +28,13 @@ export class AuthService {
 
     async registerUser(data: CreateUserDto){
         try {
-            return await this.userService.create(data)
+            const user = await this.userService.create(data)
+
+            const payload = { email: user?.email, sub: user.userId }
+
+            return {
+                access_token: this.jwtService.sign(payload)
+            }
         } catch (error) {
             if(error?.message?.includes('Unique constraint failed on the fields: (`email`)')){
                 throw new HttpException('This email address is already registered', HttpStatus.FORBIDDEN)
