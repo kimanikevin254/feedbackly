@@ -57,7 +57,7 @@ export default function Instructions({ projectId }: { projectId: string }) {
                 isLoading ?
                 <Skeleton className="h-24 w-96 rounded-xl" /> :
                 <div className="bg-gray-800 text-white w-fit py-2 px-4 rounded flex flex-col space-y-2">
-                    <code>{`<my-widget project-id="${project?.sitekey}"></my-widget>`}</code>
+                    <code>{`<feedbackly-widget project-id="${project?.sitekey}"></feedbackly-widget>`}</code>
                     <code>{`<script src="https://feedbackly-widget.vercel.app/feedbackly-widget.umd.js"></script>`}</code>
                 </div>
             }
