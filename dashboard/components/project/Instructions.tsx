@@ -4,6 +4,7 @@ import axiosClient from "@/utils/axiosClient"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { Skeleton } from "../ui/skeleton"
+import Link from "next/link"
 
 interface Owner {
     name: string;
@@ -49,6 +50,15 @@ export default function Instructions({ projectId }: { projectId: string }) {
     }, [projectId])
   return (
     <div>
+        {
+            project &&
+            <div className="my-4 space-y-2">
+                <Link href={project.url} target="_blank" className="text-xl font-bold underline">{project.name}</Link>
+                <p className="text-gray-500">{project.description}</p>
+                <p className="font-semibold text-gray-500">Created on: {new Date(project.createdAt).toLocaleString()}</p>
+            </div>
+        }
+
         <h3 className='text-xl font-bold'>Start Collecting Feedback!</h3>
         <p className='text-gray-500 font-semibold'>Embed this code in your site</p>
 
