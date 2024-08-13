@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Instructions from '@/components/project/Instructions'
+import Feedback from '@/components/project/Feedback'
 
 export default function Page({ params }: { params: { projectId: string } }): ReactNode {
   return (
@@ -15,7 +16,7 @@ export default function Page({ params }: { params: { projectId: string } }): Rea
       </TabsContent>
 
       <TabsContent value="feedback">
-        Change your password here.
+        <Feedback projectId={params.projectId} />
       </TabsContent>
     </Tabs>
   )
