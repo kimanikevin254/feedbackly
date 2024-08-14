@@ -33,6 +33,18 @@ export class UsersService {
     })
   }
 
+  async profile(userData: any){
+    return this.prismaService.user.findUnique({ 
+      where: { email: userData.email },
+      select: {
+        userId: true,
+        name: true,
+        email: true,
+        createdAt: true
+      }
+    })
+  }
+
   findAll() {
     return `This action returns all users`;
   }
