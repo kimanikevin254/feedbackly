@@ -32,12 +32,12 @@ export default function Home() {
       </header>
 
       {/* Hero */}
-      <div className="flex justify-around items-center py-12">
-        <div>
-          <div className="space-y-1">
-            <h1 className="text-5xl font-bold">Collect feedback</h1>
-            <h1 className="text-5xl font-bold">form your users</h1>
-            <h1 className="text-5xl font-bold">easily</h1>
+      <div className="flex flex-col space-y-12 sm:flex-row sm:justify-around sm:py-12">
+        <div className="w-fit mx-auto">
+          <div className="w-fit space-y-1">
+            <h1 className="text-3xl sm:text-5xl font-bold">Collect feedback</h1>
+            <h1 className="text-3xl sm:text-5xl font-bold">form your users</h1>
+            <h1 className="text-3xl sm:text-5xl font-bold">easily</h1>
           </div>
           <div className="mt-4 text-gray-500">
             <p>Embed a feedback form on your website</p>
@@ -45,14 +45,16 @@ export default function Home() {
           </div>
         </div>
 
-        <Hero />
+        <div className='w-96 mx-auto'>
+         <Hero />
+        </div>
       </div>
 
       {/* Features */}
       <div className="mt-12">
         <h3 className="text-3xl text-center font-bold">Features</h3>
 
-        <div className="mt-4 flex justify-around">
+        <div className="mt-4 flex flex-col gap-4 items-center sm:flex-row sm:flex-wrap sm:justify-around">
           <Card className="w-96">
             <CardHeader>
               <CardTitle>Embeddable Form</CardTitle>
