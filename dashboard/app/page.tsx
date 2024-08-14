@@ -55,7 +55,7 @@ export default function Home() {
         <h3 className="text-3xl text-center font-bold">Features</h3>
 
         <div className="mt-4 flex flex-col gap-4 items-center sm:flex-row sm:flex-wrap sm:justify-around">
-          <Card className="w-96">
+          <Card className="w-96 h-48">
             <CardHeader>
               <CardTitle>Embeddable Form</CardTitle>
             </CardHeader>
@@ -64,7 +64,7 @@ export default function Home() {
             </CardContent>
           </Card>
 
-          <Card className="w-96">
+          <Card className="w-96 h-48">
             <CardHeader>
               <CardTitle>Centralized Dashboard</CardTitle>
             </CardHeader>
@@ -73,7 +73,7 @@ export default function Home() {
             </CardContent>
           </Card>
 
-          <Card className="w-96">
+          <Card className="w-96 h-48">
             <CardHeader>
               <CardTitle>Guaranteed Security</CardTitle>
             </CardHeader>
