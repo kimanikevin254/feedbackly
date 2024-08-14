@@ -1,10 +1,11 @@
 'use client'
 
-import { ColumnDef, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from "@tanstack/react-table";
+import { ColumnDef, flexRender, getCoreRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable } from "@tanstack/react-table";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface FeedbackTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -14,6 +15,7 @@ interface FeedbackTableProps<TData, TValue> {
 export default function FeedbackTable<TData, TValue>({ columns, data } : FeedbackTableProps<TData, TValue>){
     const [pageIndex, setPageIndex] = useState(0);  // Default to the first page
     const [pageSize, setPageSize] = useState(5);
+    const [sorting, setSorting] = useState<SortingState>([])
 
     const table = useReactTable({
         data,
@@ -23,9 +25,12 @@ export default function FeedbackTable<TData, TValue>({ columns, data } : Feedbac
                 pageIndex,
                 pageSize,
             },
+            sorting,
         },
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        onSortingChange: setSorting,
+        getSortedRowModel: getSortedRowModel(),
     })
 
     // Function to navigate to the next page
@@ -108,11 +113,11 @@ const handlePageSizeChange = (newSize: number) => {
             </Table>
             <div className="flex items-center justify-between p-4">
             <div className="space-x-2">
-                <Button onClick={handlePreviousPage} disabled={!table.getCanPreviousPage()}>
-                    Previous
+                <Button variant={'ghost'} onClick={handlePreviousPage} disabled={!table.getCanPreviousPage()}>
+                    <ChevronLeft className='w-4 h-4' />
                 </Button>
-                <Button onClick={handleNextPage} disabled={!table.getCanNextPage()}>
-                    Next
+                <Button variant={'ghost'} onClick={handleNextPage} disabled={!table.getCanNextPage()}>
+                    <ChevronRight className='w-4 h-4' />
                 </Button>
             </div>
             <Select

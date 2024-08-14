@@ -8,7 +8,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import FeedbackTable from './FeedbackTable';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { Button } from '../ui/button';
-import { MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, Triangle } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
   
 
@@ -30,7 +30,17 @@ interface Feedback {
 const columns: ColumnDef<Feedback>[] = [
     {
         accessorKey: 'createdAt',
-        header: 'Submitted On',
+        header: ({ column }) => {
+            return (
+                <Button 
+                    variant={'ghost'} 
+                    onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+                    className='flex items-center gap-2'
+                >
+                    <span>Submitted On</span> { column.getIsSorted() === 'asc' ? <Triangle className='h-3 w-3 fill-primary' /> : <Triangle className='h-3 w-3 fill-primary rotate-180' />}
+                </Button>
+            )
+        },
         cell: ({ row }) => {
             const createdAt: Date = row.getValue('createdAt')
 
@@ -47,7 +57,17 @@ const columns: ColumnDef<Feedback>[] = [
     },
     {
         accessorKey: 'rating',
-        header: 'Rating'
+        header: ({ column }) => {
+            return (
+                <Button 
+                    variant={'ghost'} 
+                    onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+                    className='flex items-center gap-2'
+                >
+                    <span>Rating</span> { column.getIsSorted() === 'asc' ? <Triangle className='h-3 w-3 fill-primary' /> : <Triangle className='h-3 w-3 fill-primary rotate-180' />}
+                </Button>
+            )
+        }
     }, 
     {
         id: 'actions',
