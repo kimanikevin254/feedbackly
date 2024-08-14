@@ -32,8 +32,8 @@ export default function Home() {
       </header>
 
       {/* Hero */}
-      <div className="flex flex-col space-y-12 sm:flex-row sm:justify-around sm:py-12">
-        <div className="w-fit mx-auto">
+      <div className="flex flex-col space-y-12 items-center sm:flex-row sm:justify-around sm:py-12 sm:items-center">
+        <div className="w-fit">
           <div className="w-fit space-y-1">
             <h1 className="text-3xl sm:text-5xl font-bold">Collect feedback</h1>
             <h1 className="text-3xl sm:text-5xl font-bold">form your users</h1>
@@ -45,7 +45,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className='w-96 mx-auto'>
+        <div className='w-96'>
          <Hero />
         </div>
       </div>
@@ -54,7 +54,7 @@ export default function Home() {
       <div className="mt-12">
         <h3 className="text-3xl text-center font-bold">Features</h3>
 
-        <div className="mt-4 flex flex-col gap-4 items-center sm:flex-row sm:flex-wrap sm:justify-around">
+        <div className="mt-4 flex flex-col gap-4 items-center sm:flex-row sm:flex-wrap sm:justify-around sm:items-center">
           <Card className="w-96 h-48">
             <CardHeader>
               <CardTitle>Embeddable Form</CardTitle>
