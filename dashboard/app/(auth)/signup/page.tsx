@@ -12,6 +12,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "react-toastify"
 import { z } from "zod"
+import { useShallow } from "zustand/react/shallow"
 
 const signupFormSchema = z.object({
   name: z.string()
@@ -26,7 +27,12 @@ const signupFormSchema = z.object({
 export default function Page() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const setAccessToken = useUserStore((state) => state.setAccessToken)
+  const { setAccessToken, setUser } = useUserStore(
+    useShallow(state => ({
+      setAccessToken: state.setAccessToken,
+      setUser: state.setUser
+    }))
+  )
 
   const form = useForm<z.infer<typeof signupFormSchema>>({
     resolver: zodResolver(signupFormSchema),
@@ -46,6 +52,10 @@ export default function Page() {
       const { data } = await axiosClient.post('/auth/register', values)
 
       setAccessToken(data.access_token)
+
+      const { data: userData } = await axiosClient.get('/users/me')
+
+      setUser(userData)
 
       router.replace('/dashboard')
 

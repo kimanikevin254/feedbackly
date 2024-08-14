@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useUserStore } from "@/store/user"
 import axiosClient from "@/utils/axiosClient"
@@ -12,6 +12,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "react-toastify"
 import { z } from "zod"
+import { useShallow } from "zustand/react/shallow"
 
 const signinFormSchema = z.object({
   email: z.string().email('Must be a valid email'),
@@ -21,7 +22,12 @@ const signinFormSchema = z.object({
 export default function Page() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const setAccessToken = useUserStore((state) => state.setAccessToken)
+  const { setAccessToken, setUser } = useUserStore(
+    useShallow(state => ({
+      setAccessToken: state.setAccessToken,
+      setUser: state.setUser
+    }))
+  )
 
   const form = useForm<z.infer<typeof signinFormSchema>>({
     resolver: zodResolver(signinFormSchema),
@@ -40,6 +46,10 @@ export default function Page() {
       const { data } = await axiosClient.post('/auth/login', values)
 
       setAccessToken(data.access_token)
+
+      const { data: userData } = await axiosClient.get('/users/me')
+
+      setUser(userData)
 
       router.replace('/dashboard')
 
